@@ -23,7 +23,7 @@ jobs:
           version: '1.12'
 
       - name: Generate products file
-        run: julia --project=deps deps/generate.jl
+        run: julia --project=deps -e 'using Pkg; Pkg.instantiate(); include("deps/generate.jl")'
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
