@@ -26,7 +26,7 @@
     "href": "index.html#quickstart",
     "title": "Landfire.jl",
     "section": "Quickstart",
-    "text": "Quickstart\n\nusing Landfire\n\n# Browse available products\nprods = Landfire.products(layer=\"FBFM13\")\n\n\nPrecompiling packages...\n   2016.6 ms  ✓ QuartoNotebookWorkerJSON3Ext (serial)\n  1 dependency successfully precompiled in 2 seconds\n[ Info: Fetching products (no cache found)...\n\n\n\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels 250FBFM13, 2.5.0 conus ak hi All",
+    "text": "Quickstart\n\nusing Landfire\n\n# Browse available products\nprods = Landfire.products(layer=\"FBFM13\")\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels 250FBFM13, 2.5.0 conus ak hi All",
     "crumbs": [
       "Docs",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Landfire.jl</span>"
