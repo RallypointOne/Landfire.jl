@@ -160,7 +160,8 @@ function products(latest::Bool = true; refresh::Bool=false, kw...)
             push!(get!(versions, p.name, String[]), p.version)
         end
         filter!(out) do prod
-            prod.version == string(maximum(VersionNumber.(versions[prod.name])))
+            year(v) = let m = match(r"(\d{4})", v); m === nothing ? 0 : parse(Int, m[1]) end
+            prod.version == versions[prod.name][argmax(year.(versions[prod.name]))]
         end
     end
     return out
