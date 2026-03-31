@@ -26,7 +26,7 @@
     "href": "index.html#quickstart",
     "title": "Landfire.jl",
     "section": "Quickstart",
-    "text": "Quickstart\n\nusing Landfire\n\n# Browse available products\nprods = Landfire.products(layer=\"FBFM13\")\n\n\nPrecompiling packages...\n   2078.3 ms  ✓ QuartoNotebookWorkerJSON3Ext (serial)\n  1 dependency successfully precompiled in 2 seconds\n[ Info: Fetching products (no cache found)...\n\n\n\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All",
+    "text": "Quickstart\n\nusing Landfire\n\n# Browse available products\nprods = Landfire.products(layer=\"FBFM13\")\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All",
     "crumbs": [
       "Docs",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Landfire.jl</span>"
@@ -159,6 +159,17 @@
     "title": "Changelog",
     "section": "",
     "text": "Unreleased",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Changelog</span>"
+    ]
+  },
+  {
+    "objectID": "changelog.html#v0.1.3",
+    "href": "changelog.html#v0.1.3",
+    "title": "Changelog",
+    "section": "v0.1.3",
+    "text": "v0.1.3\n\nFixes\n\nFix version string comparison that crashed on LANDFIRE’s non-semver version strings (e.g., “LF2024”). Now uses year extraction instead of VersionNumber parsing.",
     "crumbs": [
       "Reference",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Changelog</span>"
