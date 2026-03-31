@@ -1,0 +1,178 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Landfire.jl",
+    "section": "",
+    "text": "Overview\nWelcome to the documentation for Landfire.jl.\nLandfire.jl is a Julia client for the LANDFIRE Product Service API. It provides tools to query, download, and process LANDFIRE geospatial data products used in wildfire and vegetation analysis.",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Landfire.jl</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "Landfire.jl",
+    "section": "Installation",
+    "text": "Installation\nusing Pkg\nPkg.add(\"Landfire\")",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Landfire.jl</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#quickstart",
+    "href": "index.html#quickstart",
+    "title": "Landfire.jl",
+    "section": "Quickstart",
+    "text": "Quickstart\n\nusing Landfire\n\n# Browse available products\nprods = Landfire.products(layer=\"FBFM13\")\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Landfire.jl</span>"
+    ]
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "Setup\nThe LANDFIRE API requires an email address. Set it via environment variable:\nConsider adding this to ~/.julia/config/startup.jl for persistence.",
+    "crumbs": [
+      "Docs",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#setup",
+    "href": "getting-started.html#setup",
+    "title": "Getting Started",
+    "section": "",
+    "text": "ENV[\"LANDFIRE_EMAIL\"] = \"your@email.com\"",
+    "crumbs": [
+      "Docs",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#basic-usage",
+    "href": "getting-started.html#basic-usage",
+    "title": "Getting Started",
+    "section": "Basic Usage",
+    "text": "Basic Usage\nusing Landfire\n\n# Check that API is running\nLandfire.healthcheck()\n\n# Browse available products\nprods = Landfire.products()                    # All latest products\nprods = Landfire.products(theme=\"Fuel\")        # Filter by theme\nprods = Landfire.products(layer=\"FBFM13\")      # Filter by layer name\n\n# Create a Dataset for an area of interest\ndata = Landfire.Dataset(prods, \"-105.5 39.5 -105.0 40.0\")  # xmin ymin xmax ymax\n\n# Download and extract (results are cached)\ntif_file = get(data)\n\n# List all extracted files\nLandfire.files(data)\n\n# Get attribute table for a layer\ntable = Landfire.attribute_table(\"FBFM13\")",
+    "crumbs": [
+      "Docs",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "examples.html",
+    "href": "examples.html",
+    "title": "Examples",
+    "section": "",
+    "text": "Browse Products\n# All latest products (cached locally)\nprods = Landfire.products()\n\n\n32-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All\n Product: 40 Scott and Burgan Fire Behavior Fuel Models Fuels LF2024_FBFM40, LF2024 conus ak hi All\n Product: Aspect Topographic LF2020_Asp, LF2020 conus ak hi All\n Product: Biophysical Settings Vegetation LF2023_BPS, LF2023 conus ak hi \n Product: Canadian Forest Fire Danger Rating System Fuels LF2024_CFFDRS, LF2024 conus ak hi \n Product: Elevation Topographic LF2020_Elev, LF2020 conus ak hi All\n Product: Existing Vegetation Cover Vegetation LF2024_EVC, LF2024 conus ak hi All\n Product: Existing Vegetation Height Vegetation LF2024_EVH, LF2024 conus ak hi All\n Product: Existing Vegetation Type Vegetation LF2024_EVT, LF2024 conus ak hi All\n Product: Final Annual Disturbance Disturbance LF2024_Dist24, LF2024 conus ak hi All\n ⋮\n Product: National Vegetation Classification Vegetation LF2016_NVC, LF2016 conus ak hi All\n Product: Operational Roads Transportation LF2023_Roads, LF2023 conus ak hi All\n Product: Percent Fire Severity Fire Regime LF2023_PFS, LF2023 conus ak hi \n Product: Preliminary Annual Disturbance Disturbance LF2024_PDist24, LF2024 conus ak hi All\n Product: Slope Degrees Topographic LF2020_SlpD, LF2020 conus ak hi All\n Product: Slope Percent Rise Topographic LF2020_SlpP, LF2020 conus ak hi All\n Product: Succession Classes Vegetation LF2024_SClass, LF2024 conus ak hi All\n Product: Vegetation Condition Class Vegetation LF2024_VCC, LF2024 conus ak hi All\n Product: Vegetation Departure Index Vegetation LF2024_VDep, LF2024 conus ak hi All\n# Filter by theme\nLandfire.products(theme=\"Fuel\")\n\n\n12-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All\n Product: 40 Scott and Burgan Fire Behavior Fuel Models Fuels LF2024_FBFM40, LF2024 conus ak hi All\n Product: Canadian Forest Fire Danger Rating System Fuels LF2024_CFFDRS, LF2024 conus ak hi \n Product: Forest Canopy Base Height Fuels LF2024_CBH, LF2024 conus ak hi All\n Product: Forest Canopy Bulk Density Fuels LF2024_CBD, LF2024 conus ak hi All\n Product: Forest Canopy Cover Fuels LF2024_CC, LF2024 conus ak hi All\n Product: Forest Canopy Height Fuels LF2024_CH, LF2024 conus ak hi All\n Product: Fuel Characteristic Classification System Fuelbeds Fuels LF2023_FCCS, LF2023 conus ak hi All\n Product: Fuel Disturbance Fuels LF2024_FDist, LF2024 conus ak hi All\n Product: Fuel Vegetation Cover Fuels LF2024_FVC, LF2024 conus ak hi All\n Product: Fuel Vegetation Height Fuels LF2024_FVH, LF2024 conus ak hi All\n Product: Fuel Vegetation Type Fuels LF2024_FVT, LF2024 conus ak hi All\n# Filter by layer name\nLandfire.products(layer=\"FBFM13\", conus=true)\n\n\n1-element Vector{Landfire.Product}:\n Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Examples</span>"
+    ]
+  },
+  {
+    "objectID": "examples.html#attribute-tables",
+    "href": "examples.html#attribute-tables",
+    "title": "Examples",
+    "section": "Attribute Tables",
+    "text": "Attribute Tables\n\n# Download and parse the FBFM13 attribute table\ntable = Landfire.attribute_table(\"FBFM13\")\nfirst(table, 5)\n\n5-element Vector{@NamedTuple{VALUE::SubString{String}, FBFM13::SubString{String}, R::SubString{String}, G::SubString{String}, B::SubString{String}, RED::SubString{String}, GREEN::SubString{String}, BLUE::SubString{String}}}:\n (VALUE = \"-9999\", FBFM13 = \"Fill-NoData\", R = \"255\", G = \"255\", B = \"255\", RED = \"1\", GREEN = \"1\", BLUE = \"1\")\n (VALUE = \"1\", FBFM13 = \"FBFM1\", R = \"255\", G = \"255\", B = \"190\", RED = \"1\", GREEN = \"1\", BLUE = \"0.745098\")\n (VALUE = \"2\", FBFM13 = \"FBFM2\", R = \"255\", G = \"255\", B = \"0\", RED = \"1\", GREEN = \"1\", BLUE = \"0\")\n (VALUE = \"3\", FBFM13 = \"FBFM3\", R = \"230\", G = \"197\", B = \"11\", RED = \"0.901961\", GREEN = \"0.772549\", BLUE = \"0.043137\")\n (VALUE = \"4\", FBFM13 = \"FBFM4\", R = \"255\", G = \"211\", B = \"127\", RED = \"1\", GREEN = \"0.827451\", BLUE = \"0.498039\")",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Examples</span>"
+    ]
+  },
+  {
+    "objectID": "examples.html#full-product-downloads",
+    "href": "examples.html#full-product-downloads",
+    "title": "Examples",
+    "section": "Full Product Downloads",
+    "text": "Full Product Downloads\n\n# Get URL for a full regional product download\nurl = Landfire.full_product_url(\"FBFM13\", \"CONUS\", 2024)\n\n\"https://landfire.gov/data-downloads/CONUS_LF2024/LF2024_FBFM13_CONUS.zip\"\n\n\n\n# Check file size before downloading\nsize = Landfire.filesize(url)\n@info \"FBFM13 CONUS download size\" Base.format_bytes(size)\n\n\n┌ Info: FBFM13 CONUS download size\n└   Base.format_bytes(size) = \"2.377 GiB\"",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Examples</span>"
+    ]
+  },
+  {
+    "objectID": "examples.html#create-a-dataset",
+    "href": "examples.html#create-a-dataset",
+    "title": "Examples",
+    "section": "Create a Dataset",
+    "text": "Create a Dataset\n\n# Define area of interest (Boulder, CO area)\n# Format: \"xmin ymin xmax ymax\" in WGS84\naoi = \"-105.5 39.9 -105.2 40.1\"\n\nfbfm13 = Landfire.products(layer=\"FBFM13\", conus=true)\n\n# Create a Dataset (lazy - doesn't download yet)\ndata = Landfire.Dataset(fbfm13, aoi)\n\n\nLandfire.Dataset\n Area of Interest: -105.5 39.9 -105.2 40.1\n - Product: 13 Anderson Fire Behavior Fuel Models Fuels LF2024_FBFM13, LF2024 conus ak hi All\n\n\n\n\nTo actually download and extract the data:\n# Download and extract (results are cached)\ntif_file = get(data)\n\n# List all extracted files\nLandfire.files(data)",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Examples</span>"
+    ]
+  },
+  {
+    "objectID": "api.html#example",
+    "href": "api.html#example",
+    "title": "API",
+    "section": "Example",
+    "text": "Example\nurl = Landfire.full_product_url(\"FBFM13\")\nsize = Landfire.filesize(url)\n@info Base.format_bytes(size)",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>API</span>"
+    ]
+  },
+  {
+    "objectID": "api.html#example-1",
+    "href": "api.html#example-1",
+    "title": "API",
+    "section": "Example",
+    "text": "Example\nurl = Landfire.full_product_url(\"FBFM13\", \"CONUS\", 2024)\n# \"https://landfire.gov/data-downloads/CONUS_LF2024/LF2024_FBFM13_CONUS.zip\"\n\n# Or from a Product (extracts layer name and year from product)\nprod = Landfire.products(layer=\"FBFM13\")[1]\nurl = Landfire.full_product_url(prod, \"CONUS\")",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>API</span>"
+    ]
+  },
+  {
+    "objectID": "api.html#keyword-arguments",
+    "href": "api.html#keyword-arguments",
+    "title": "API",
+    "section": "Keyword Arguments",
+    "text": "Keyword Arguments\n\nrefresh::Bool=false - Set to true to refresh the cached product list from the API\n\nFilter products by field values. Boolean fields use exact matching, string fields use substring matching.\n\nname::String\ntheme::String\nlayer::String\nversion::String\nconus::Bool\nak::Bool\nhi::Bool\ngeoAreas::String",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>API</span>"
+    ]
+  },
+  {
+    "objectID": "api.html#examples",
+    "href": "api.html#examples",
+    "title": "API",
+    "section": "Examples",
+    "text": "Examples\nproducts(conus=true)              # Only CONUS products\nproducts(theme=\"Fuels\")           # Products with \"Fuels\" in theme\nproducts(layer=\"FBFM13\")          # Products with \"FBFM13\" in layer name\nproducts(conus=true, ak=false)    # CONUS only, not Alaska\nproducts(refresh=true)            # Refresh cache and return all latest products",
+    "crumbs": [
+      "Docs",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>API</span>"
+    ]
+  },
+  {
+    "objectID": "changelog.html",
+    "href": "changelog.html",
+    "title": "Changelog",
+    "section": "",
+    "text": "Unreleased",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Changelog</span>"
+    ]
+  },
+  {
+    "objectID": "changelog.html#v0.1.3",
+    "href": "changelog.html#v0.1.3",
+    "title": "Changelog",
+    "section": "v0.1.3",
+    "text": "v0.1.3\n\nFixes\n\nFix version string comparison that crashed on LANDFIRE’s non-semver version strings (e.g., “LF2024”). Now uses year extraction instead of VersionNumber parsing.",
+    "crumbs": [
+      "Reference",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Changelog</span>"
+    ]
+  }
+]

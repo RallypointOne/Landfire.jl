@@ -1,0 +1,498 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - on branch (detached from dac491b) - src/src/Landfire.jl</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/src</a> - Landfire.jl<span style="font-size: 80%;"> (source / <a href="Landfire.jl.func-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">on branch (detached from dac491b)</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">41.8&nbsp;%</td>
+            <td class="headerCovTableEntry">158</td>
+            <td class="headerCovTableEntry">66</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-03-31 12:12:12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : module Landfire</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : using HTTP, JSON3, Extents, Dates, Downloads, Scratch, StyledStrings</span>
+<span id="L4"><span class="lineNum">       4</span>              : using p7zip_jll: p7zip</span>
+<span id="L5"><span class="lineNum">       5</span>              : import GeoInterface as GI</span>
+<span id="L6"><span class="lineNum">       6</span>              : </span>
+<span id="L7"><span class="lineNum">       7</span>              : public healthcheck, products, Job, submit, cancel, status, extract, Dataset, files, attribute_table_url, attribute_table, full_product_url, filesize</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC tlaBgGNC">           6 : dir() = Scratch.@get_scratch!(&quot;landfire_data&quot;)</span></span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : #-----------------------------------------------------------------------------# constants</span>
+<span id="L12"><span class="lineNum">      12</span>              : const BASE_URL = &quot;https://lfps.usgs.gov/api&quot;</span>
+<span id="L13"><span class="lineNum">      13</span>              : const DOWNLOAD_BASE_URL = &quot;https://landfire.gov/data-downloads&quot;</span>
+<span id="L14"><span class="lineNum">      14</span>              : const HEADER = Dict(&quot;Accept&quot; =&gt; &quot;application/json&quot;, &quot;Content-Type&quot; =&gt; &quot;application/json&quot;)</span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              : #-----------------------------------------------------------------------------# attribute_table_url</span>
+<span id="L17"><span class="lineNum">      17</span>              : const LAYERS = [&quot;FBFM13&quot;, &quot;FBFM40&quot;, &quot;EVT&quot;, &quot;EVC&quot;, &quot;FVT&quot;, &quot;FVC&quot;, &quot;FRG&quot;, &quot;SCLASS&quot;, &quot;FDIST&quot;, &quot;HDIST&quot;, &quot;BPS&quot;]</span>
+<span id="L18"><span class="lineNum">      18</span>              : </span>
+<span id="L19"><span class="lineNum">      19</span>              : &quot;&quot;&quot;</span>
+<span id="L20"><span class="lineNum">      20</span>              :     attribute_table_url(layer::String, year::Int=2024)</span>
+<span id="L21"><span class="lineNum">      21</span>              :     attribute_table_url(product::Product)</span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span>              : Return the URL for the LANDFIRE attribute table CSV for the given layer and year.</span>
+<span id="L24"><span class="lineNum">      24</span>              : </span>
+<span id="L25"><span class="lineNum">      25</span>              : Available layers: $(join(LAYERS, &quot;, &quot;))</span>
+<span id="L26"><span class="lineNum">      26</span>              : &quot;&quot;&quot;</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           4 : function attribute_table_url(layer::String, year::Int=2024)</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">           4 :     layer in LAYERS || error(&quot;Unknown layer: $layer. Available: $(join(LAYERS, &quot;, &quot;))&quot;)</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">           3 :     return &quot;https://www.landfire.gov/sites/default/files/CSV/$year/LF$(year)_$layer.csv&quot;</span></span>
+<span id="L30"><span class="lineNum">      30</span>              : end</span>
+<span id="L31"><span class="lineNum">      31</span>              : </span>
+<span id="L32"><span class="lineNum">      32</span>              : #-----------------------------------------------------------------------------# healthcheck</span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaUNC tlaBgUNC">           0 : healthcheck() = JSON3.read(HTTP.get(&quot;$(BASE_URL)/healthCheck&quot;, HEADER).body)</span></span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span>              : #-----------------------------------------------------------------------------# Products</span>
+<span id="L36"><span class="lineNum">      36</span>              : &quot;&quot;&quot;</span>
+<span id="L37"><span class="lineNum">      37</span>              : A struct representing a product in the LANDFIRE API.</span>
+<span id="L38"><span class="lineNum">      38</span>              : - Reference: [https://lfps.usgs.gov/products](https://lfps.usgs.gov/products)</span>
+<span id="L39"><span class="lineNum">      39</span>              : &quot;&quot;&quot;</span>
+<span id="L40"><span class="lineNum">      40</span>              : struct Product</span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC tlaBgGNC">         238 :     name::String</span></span>
+<span id="L42"><span class="lineNum">      42</span>              :     theme::String</span>
+<span id="L43"><span class="lineNum">      43</span>              :     layer::String</span>
+<span id="L44"><span class="lineNum">      44</span>              :     version::String</span>
+<span id="L45"><span class="lineNum">      45</span>              :     conus::Bool</span>
+<span id="L46"><span class="lineNum">      46</span>              :     ak::Bool</span>
+<span id="L47"><span class="lineNum">      47</span>              :     hi::Bool</span>
+<span id="L48"><span class="lineNum">      48</span>              :     geoAreas::String</span>
+<span id="L49"><span class="lineNum">      49</span>              : end</span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">           2 : function Base.show(io::IO, p::Product)</span></span>
+<span id="L51"><span class="lineNum">      51</span> <span class="tlaGNC">           4 :     print(io, &quot;Product: &quot;, styled&quot;{bright_cyan:$(p.name)} {bright_yellow:$(p.theme)}&quot;)</span></span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">           4 :     print(io, styled&quot; {bright_magenta:$(p.layer)}, {bright_black:$(p.version)}&quot;)</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">           2 :     for k in (:conus, :ak, :hi)</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaGNC">           9 :         getfield(p, k) ? print(io, styled&quot; {bright_green:$(k)}&quot;) : print(io, styled&quot; {bright_red:$(k)}&quot;)</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">           8 :     end</span></span>
+<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">           2 :     print(io, &quot; &quot;, p.geoAreas)</span></span>
+<span id="L57"><span class="lineNum">      57</span>              : end</span>
+<span id="L58"><span class="lineNum">      58</span>              : </span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaUNC tlaBgUNC">           0 : function attribute_table_url(product::Product)</span></span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaUNC">           0 :     for layer in LAYERS</span></span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaUNC">           0 :         occursin(layer, product.layer) &amp;&amp; return attribute_table_url(layer)</span></span>
+<span id="L62"><span class="lineNum">      62</span> <span class="tlaUNC">           0 :     end</span></span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaUNC">           0 :     error(&quot;No attribute table found for product layer: $(product.layer)&quot;)</span></span>
+<span id="L64"><span class="lineNum">      64</span>              : end</span>
+<span id="L65"><span class="lineNum">      65</span>              : </span>
+<span id="L66"><span class="lineNum">      66</span>              : &quot;&quot;&quot;</span>
+<span id="L67"><span class="lineNum">      67</span>              :     attribute_table(product::Product)</span>
+<span id="L68"><span class="lineNum">      68</span>              :     attribute_table(layer::String, year::Int=2024)</span>
+<span id="L69"><span class="lineNum">      69</span>              : </span>
+<span id="L70"><span class="lineNum">      70</span>              : Download and parse the LANDFIRE attribute table CSV for the given product or layer.</span>
+<span id="L71"><span class="lineNum">      71</span>              : </span>
+<span id="L72"><span class="lineNum">      72</span>              : Returns a vector of `NamedTuple`s with column names from the CSV header.</span>
+<span id="L73"><span class="lineNum">      73</span>              : &quot;&quot;&quot;</span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaUNC">           0 : function attribute_table(layer::String, year::Int=2024)</span></span>
+<span id="L75"><span class="lineNum">      75</span> <span class="tlaUNC">           0 :     url = attribute_table_url(layer, year)</span></span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaUNC">           0 :     _parse_csv(String(HTTP.get(url).body))</span></span>
+<span id="L77"><span class="lineNum">      77</span>              : end</span>
+<span id="L78"><span class="lineNum">      78</span>              : </span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaUNC">           0 : function attribute_table(product::Product)</span></span>
+<span id="L80"><span class="lineNum">      80</span> <span class="tlaUNC">           0 :     url = attribute_table_url(product)</span></span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaUNC">           0 :     _parse_csv(String(HTTP.get(url).body))</span></span>
+<span id="L82"><span class="lineNum">      82</span>              : end</span>
+<span id="L83"><span class="lineNum">      83</span>              : </span>
+<span id="L84"><span class="lineNum">      84</span> <span class="tlaUNC">           0 : function _parse_csv(csv::String)</span></span>
+<span id="L85"><span class="lineNum">      85</span>              :     # Handle both Unix and Windows line endings</span>
+<span id="L86"><span class="lineNum">      86</span> <span class="tlaUNC">           0 :     csv = replace(csv, &quot;\r\n&quot; =&gt; &quot;\n&quot;)</span></span>
+<span id="L87"><span class="lineNum">      87</span> <span class="tlaUNC">           0 :     csv = replace(csv, &quot;\r&quot; =&gt; &quot;&quot;)</span></span>
+<span id="L88"><span class="lineNum">      88</span> <span class="tlaUNC">           0 :     lines = split(strip(csv), '\n')</span></span>
+<span id="L89"><span class="lineNum">      89</span> <span class="tlaUNC">           0 :     header = Symbol.(split(lines[1], ','))</span></span>
+<span id="L90"><span class="lineNum">      90</span> <span class="tlaUNC">           0 :     return map(lines[2:end]) do line</span></span>
+<span id="L91"><span class="lineNum">      91</span> <span class="tlaUNC">           0 :         values = split(line, ',')</span></span>
+<span id="L92"><span class="lineNum">      92</span> <span class="tlaUNC">           0 :         NamedTuple{Tuple(header)}(Tuple(values))</span></span>
+<span id="L93"><span class="lineNum">      93</span>              :     end</span>
+<span id="L94"><span class="lineNum">      94</span>              : end</span>
+<span id="L95"><span class="lineNum">      95</span>              : </span>
+<span id="L96"><span class="lineNum">      96</span> <span class="tlaGNC tlaBgGNC">           2 : products_cache_file() = joinpath(dir(), &quot;products_cache.json&quot;)</span></span>
+<span id="L97"><span class="lineNum">      97</span>              : </span>
+<span id="L98"><span class="lineNum">      98</span>              : # Fetch products from API and cache to file</span>
+<span id="L99"><span class="lineNum">      99</span> <span class="tlaUNC tlaBgUNC">           0 : function _fetch_and_cache_products()</span></span>
+<span id="L100"><span class="lineNum">     100</span> <span class="tlaUNC">           0 :     url = &quot;$BASE_URL/products&quot;</span></span>
+<span id="L101"><span class="lineNum">     101</span> <span class="tlaUNC">           0 :     response = HTTP.get(url, HEADER)</span></span>
+<span id="L102"><span class="lineNum">     102</span> <span class="tlaUNC">           0 :     write(products_cache_file(), response.body)</span></span>
+<span id="L103"><span class="lineNum">     103</span> <span class="tlaUNC">           0 :     return JSON3.read(response.body)</span></span>
+<span id="L104"><span class="lineNum">     104</span>              : end</span>
+<span id="L105"><span class="lineNum">     105</span>              : </span>
+<span id="L106"><span class="lineNum">     106</span>              : # Load products from cache or fetch if missing</span>
+<span id="L107"><span class="lineNum">     107</span> <span class="tlaGNC tlaBgGNC">           4 : function _load_products(; refresh::Bool=false)</span></span>
+<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">           2 :     cache_file = products_cache_file()</span></span>
+<span id="L109"><span class="lineNum">     109</span> <span class="tlaGNC">           4 :     if refresh || !isfile(cache_file)</span></span>
+<span id="L110"><span class="lineNum">     110</span> <span class="tlaUNC tlaBgUNC">           0 :         @info refresh ? &quot;Refreshing products cache...&quot; : &quot;Fetching products (no cache found)...&quot;</span></span>
+<span id="L111"><span class="lineNum">     111</span> <span class="tlaUNC">           0 :         return _fetch_and_cache_products()</span></span>
+<span id="L112"><span class="lineNum">     112</span>              :     end</span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC tlaBgGNC">           2 :     return JSON3.read(read(cache_file, String))</span></span>
+<span id="L114"><span class="lineNum">     114</span>              : end</span>
+<span id="L115"><span class="lineNum">     115</span>              : </span>
+<span id="L116"><span class="lineNum">     116</span>              : &quot;&quot;&quot;</span>
+<span id="L117"><span class="lineNum">     117</span>              :     products(latest=true; refresh=false, kw...) -&gt; Vector{Product}</span>
+<span id="L118"><span class="lineNum">     118</span>              : </span>
+<span id="L119"><span class="lineNum">     119</span>              : Fetch and filter available products from the LANDFIRE API.</span>
+<span id="L120"><span class="lineNum">     120</span>              : </span>
+<span id="L121"><span class="lineNum">     121</span>              : Returns a vector of `Product` structs sorted by name.  Results are cached locally;</span>
+<span id="L122"><span class="lineNum">     122</span>              : use `refresh=true` to update the cache from the API.</span>
+<span id="L123"><span class="lineNum">     123</span>              : </span>
+<span id="L124"><span class="lineNum">     124</span>              : ## Keyword Arguments</span>
+<span id="L125"><span class="lineNum">     125</span>              : - `refresh::Bool=false` - Set to `true` to refresh the cached product list from the API</span>
+<span id="L126"><span class="lineNum">     126</span>              : </span>
+<span id="L127"><span class="lineNum">     127</span>              : Filter products by field values.  Boolean fields use exact matching, string fields use substring matching.</span>
+<span id="L128"><span class="lineNum">     128</span>              : $(join([&quot;- `$k::$v`&quot; for (k,v) in zip(fieldnames(Product), fieldtypes(Product))], &quot;\n&quot;))</span>
+<span id="L129"><span class="lineNum">     129</span>              : </span>
+<span id="L130"><span class="lineNum">     130</span>              : ## Examples</span>
+<span id="L131"><span class="lineNum">     131</span>              : ```julia</span>
+<span id="L132"><span class="lineNum">     132</span>              : products(conus=true)              # Only CONUS products</span>
+<span id="L133"><span class="lineNum">     133</span>              : products(theme=&quot;Fuels&quot;)           # Products with &quot;Fuels&quot; in theme</span>
+<span id="L134"><span class="lineNum">     134</span>              : products(layer=&quot;FBFM13&quot;)          # Products with &quot;FBFM13&quot; in layer name</span>
+<span id="L135"><span class="lineNum">     135</span>              : products(conus=true, ak=false)    # CONUS only, not Alaska</span>
+<span id="L136"><span class="lineNum">     136</span>              : products(refresh=true)            # Refresh cache and return all latest products</span>
+<span id="L137"><span class="lineNum">     137</span>              : ```</span>
+<span id="L138"><span class="lineNum">     138</span>              : &quot;&quot;&quot;</span>
+<span id="L139"><span class="lineNum">     139</span> <span class="tlaGNC">           4 : function products(latest::Bool = true; refresh::Bool=false, kw...)</span></span>
+<span id="L140"><span class="lineNum">     140</span> <span class="tlaGNC">           2 :     obj = _load_products(; refresh)</span></span>
+<span id="L141"><span class="lineNum">     141</span> <span class="tlaGNC">           4 :     out = map(obj.products) do x</span></span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaGNC">         234 :         Product(x.productName, x.theme, x.layerName, x.version, x.conus, x.ak, x.hi, x.geoAreas)</span></span>
+<span id="L143"><span class="lineNum">     143</span>              :     end</span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">        1498 :     sort!(out, by = p -&gt; p.name)</span></span>
+<span id="L145"><span class="lineNum">     145</span>              :     # Apply keyword filters</span>
+<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">           2 :     if !isempty(kw)</span></span>
+<span id="L147"><span class="lineNum">     147</span> <span class="tlaUNC tlaBgUNC">           0 :         filter!(out) do p</span></span>
+<span id="L148"><span class="lineNum">     148</span>              :             all(kw) do (k, v)</span>
+<span id="L149"><span class="lineNum">     149</span>              :                 val = getfield(p, k)</span>
+<span id="L150"><span class="lineNum">     150</span>              :                 val isa Bool ? (val == v) : occursin(v, val)</span>
+<span id="L151"><span class="lineNum">     151</span>              :             end</span>
+<span id="L152"><span class="lineNum">     152</span>              :         end</span>
+<span id="L153"><span class="lineNum">     153</span>              :     end</span>
+<span id="L154"><span class="lineNum">     154</span> <span class="tlaGNC tlaBgGNC">           2 :     if latest</span></span>
+<span id="L155"><span class="lineNum">     155</span>              :         # Filter out year-specific editions (e.g., &quot;Product Name 2019&quot;)</span>
+<span id="L156"><span class="lineNum">     156</span> <span class="tlaGNC">         118 :         filter!(p -&gt; !occursin(r&quot; \d{4}$&quot;, p.name), out)</span></span>
+<span id="L157"><span class="lineNum">     157</span>              :         # Keep only the latest version of each product</span>
+<span id="L158"><span class="lineNum">     158</span> <span class="tlaGNC">           1 :         versions = Dict{String, Vector{String}}()</span></span>
+<span id="L159"><span class="lineNum">     159</span> <span class="tlaGNC">           1 :         for p in out</span></span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaGNC">         117 :             push!(get!(versions, p.name, String[]), p.version)</span></span>
+<span id="L161"><span class="lineNum">     161</span> <span class="tlaGNC">         117 :         end</span></span>
+<span id="L162"><span class="lineNum">     162</span> <span class="tlaGNC">           1 :         filter!(out) do prod</span></span>
+<span id="L163"><span class="lineNum">     163</span> <span class="tlaGNC">        1110 :             year(v) = let m = match(r&quot;(\d{4})&quot;, v); m === nothing ? 0 : parse(Int, m[1]) end</span></span>
+<span id="L164"><span class="lineNum">     164</span> <span class="tlaGNC">         117 :             prod.version == versions[prod.name][argmax(year.(versions[prod.name]))]</span></span>
+<span id="L165"><span class="lineNum">     165</span>              :         end</span>
+<span id="L166"><span class="lineNum">     166</span>              :     end</span>
+<span id="L167"><span class="lineNum">     167</span> <span class="tlaGNC">           2 :     return out</span></span>
+<span id="L168"><span class="lineNum">     168</span>              : end</span>
+<span id="L169"><span class="lineNum">     169</span>              : </span>
+<span id="L170"><span class="lineNum">     170</span>              : #-----------------------------------------------------------------------------# Jobs</span>
+<span id="L171"><span class="lineNum">     171</span> <span class="tlaGNC">          12 : @kwdef struct Job</span></span>
+<span id="L172"><span class="lineNum">     172</span> <span class="tlaGNC">           6 :     email::String = haskey(ENV, &quot;LANDFIRE_EMAIL&quot;) ? ENV[&quot;LANDFIRE_EMAIL&quot;] : error(&quot;Please set LANDFIRE_EMAIL environment variable.&quot;)</span></span>
+<span id="L173"><span class="lineNum">     173</span>              :     layers::Vector{Product}</span>
+<span id="L174"><span class="lineNum">     174</span>              :     area_of_interest::String</span>
+<span id="L175"><span class="lineNum">     175</span>              :     output_projection::Union{Nothing, String} = nothing</span>
+<span id="L176"><span class="lineNum">     176</span>              :     resample_resolution::Union{Nothing, Int} = nothing</span>
+<span id="L177"><span class="lineNum">     177</span>              :     edit_rule::Union{Nothing, String} = nothing</span>
+<span id="L178"><span class="lineNum">     178</span>              :     edit_mask::Union{Nothing, String} = nothing</span>
+<span id="L179"><span class="lineNum">     179</span>              :     priority_code::Union{Nothing, String} = nothing</span>
+<span id="L180"><span class="lineNum">     180</span>              : end</span>
+<span id="L181"><span class="lineNum">     181</span>              : </span>
+<span id="L182"><span class="lineNum">     182</span> <span class="tlaGNC">          12 : Job(layers::Vector{Product}, aoi; kw...) = Job(; layers, area_of_interest = area_of_interest(aoi), kw...)</span></span>
+<span id="L183"><span class="lineNum">     183</span>              : </span>
+<span id="L184"><span class="lineNum">     184</span>              : # Content-based hash for caching (Vector hash uses object identity by default)</span>
+<span id="L185"><span class="lineNum">     185</span> <span class="tlaGNC">           3 : function Base.hash(job::Job, h::UInt)</span></span>
+<span id="L186"><span class="lineNum">     186</span> <span class="tlaGNC">           3 :     h = hash(job.email, h)</span></span>
+<span id="L187"><span class="lineNum">     187</span> <span class="tlaGNC">           3 :     for layer in job.layers</span></span>
+<span id="L188"><span class="lineNum">     188</span> <span class="tlaGNC">           3 :         h = hash(layer.name, h)</span></span>
+<span id="L189"><span class="lineNum">     189</span> <span class="tlaGNC">           3 :         h = hash(layer.layer, h)</span></span>
+<span id="L190"><span class="lineNum">     190</span> <span class="tlaGNC">           3 :         h = hash(layer.version, h)</span></span>
+<span id="L191"><span class="lineNum">     191</span> <span class="tlaGNC">           3 :     end</span></span>
+<span id="L192"><span class="lineNum">     192</span> <span class="tlaGNC">           3 :     h = hash(job.area_of_interest, h)</span></span>
+<span id="L193"><span class="lineNum">     193</span> <span class="tlaGNC">           3 :     h = hash(job.output_projection, h)</span></span>
+<span id="L194"><span class="lineNum">     194</span> <span class="tlaGNC">           3 :     h = hash(job.resample_resolution, h)</span></span>
+<span id="L195"><span class="lineNum">     195</span> <span class="tlaGNC">           3 :     h = hash(job.edit_rule, h)</span></span>
+<span id="L196"><span class="lineNum">     196</span> <span class="tlaGNC">           3 :     h = hash(job.edit_mask, h)</span></span>
+<span id="L197"><span class="lineNum">     197</span> <span class="tlaGNC">           3 :     hash(job.priority_code, h)</span></span>
+<span id="L198"><span class="lineNum">     198</span>              : end</span>
+<span id="L199"><span class="lineNum">     199</span>              : </span>
+<span id="L200"><span class="lineNum">     200</span>              : &quot;&quot;&quot;</span>
+<span id="L201"><span class="lineNum">     201</span>              :     area_of_interest(x)</span>
+<span id="L202"><span class="lineNum">     202</span>              : </span>
+<span id="L203"><span class="lineNum">     203</span>              : Convert various input types to a string format suitable for the LANDFIRE API.</span>
+<span id="L204"><span class="lineNum">     204</span>              : </span>
+<span id="L205"><span class="lineNum">     205</span>              : - `Integer`: Converted to string (represents a feature ID)</span>
+<span id="L206"><span class="lineNum">     206</span>              : - `String`: Passed through unchanged (WKT or custom format)</span>
+<span id="L207"><span class="lineNum">     207</span>              : - `Extents.Extent`: Converted to space-separated bounds `&quot;xmin ymin xmax ymax&quot;`</span>
+<span id="L208"><span class="lineNum">     208</span>              : - Any geometry with `GeoInterface.extent`: Extracts extent and converts to bounds</span>
+<span id="L209"><span class="lineNum">     209</span>              : &quot;&quot;&quot;</span>
+<span id="L210"><span class="lineNum">     210</span> <span class="tlaGNC">           2 : area_of_interest(x::Integer) = string(x)</span></span>
+<span id="L211"><span class="lineNum">     211</span> <span class="tlaGNC">           2 : area_of_interest(s::String) = s</span></span>
+<span id="L212"><span class="lineNum">     212</span> <span class="tlaGNC">           5 : area_of_interest((; X, Y)::Extents.Extent) = join(string.([X[1], Y[1], X[2], Y[2]]), ' ')</span></span>
+<span id="L213"><span class="lineNum">     213</span> <span class="tlaUNC tlaBgUNC">           0 : area_of_interest(geom) = area_of_interest(GI.extent(geom))</span></span>
+<span id="L214"><span class="lineNum">     214</span>              : </span>
+<span id="L215"><span class="lineNum">     215</span>              : #-----------------------------------------------------------------------------# submit</span>
+<span id="L216"><span class="lineNum">     216</span>              : &quot;&quot;&quot;</span>
+<span id="L217"><span class="lineNum">     217</span>              :     submit(job::Job) --&gt; job_id::String</span>
+<span id="L218"><span class="lineNum">     218</span>              : </span>
+<span id="L219"><span class="lineNum">     219</span>              : Submits a job to the LANDFIRE API.  Returns the job ID as a string.</span>
+<span id="L220"><span class="lineNum">     220</span>              : &quot;&quot;&quot;</span>
+<span id="L221"><span class="lineNum">     221</span> <span class="tlaUNC">           0 : function submit(job::Job)</span></span>
+<span id="L222"><span class="lineNum">     222</span> <span class="tlaUNC">           0 :     url = BASE_URL * &quot;/job/submit&quot;</span></span>
+<span id="L223"><span class="lineNum">     223</span> <span class="tlaUNC">           0 :     body = Dict(</span></span>
+<span id="L224"><span class="lineNum">     224</span>              :         &quot;Email&quot; =&gt; job.email,</span>
+<span id="L225"><span class="lineNum">     225</span> <span class="tlaUNC">           0 :         &quot;Layer_List&quot; =&gt; join(map(x -&gt; x.layer, job.layers), ';'),</span></span>
+<span id="L226"><span class="lineNum">     226</span>              :         &quot;Area_of_Interest&quot; =&gt; job.area_of_interest,</span>
+<span id="L227"><span class="lineNum">     227</span>              :     )</span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaUNC">           0 :     isnothing(job.output_projection) || (body[&quot;Output_Projection&quot;] = job.output_projection)</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaUNC">           0 :     isnothing(job.resample_resolution) || (body[&quot;Resample_Resolution&quot;] = job.resample_resolution)</span></span>
+<span id="L230"><span class="lineNum">     230</span> <span class="tlaUNC">           0 :     isnothing(job.edit_rule) || (body[&quot;Edit_Rule&quot;] = job.edit_rule)</span></span>
+<span id="L231"><span class="lineNum">     231</span> <span class="tlaUNC">           0 :     isnothing(job.edit_mask) || (body[&quot;Edit_Mask&quot;] = job.edit_mask)</span></span>
+<span id="L232"><span class="lineNum">     232</span> <span class="tlaUNC">           0 :     isnothing(job.priority_code) || (body[&quot;Priority_Code&quot;] = job.priority_code)</span></span>
+<span id="L233"><span class="lineNum">     233</span> <span class="tlaUNC">           0 :     res = HTTP.post(url, HEADER, JSON3.write(body))</span></span>
+<span id="L234"><span class="lineNum">     234</span> <span class="tlaUNC">           0 :     id = JSON3.read(res.body).jobId</span></span>
+<span id="L235"><span class="lineNum">     235</span> <span class="tlaUNC">           0 :     @info &quot;Job submitted.  View job messages at: https://lfps.usgs.gov/job/$id&quot;</span></span>
+<span id="L236"><span class="lineNum">     236</span> <span class="tlaUNC">           0 :     return id</span></span>
+<span id="L237"><span class="lineNum">     237</span>              : end</span>
+<span id="L238"><span class="lineNum">     238</span>              : </span>
+<span id="L239"><span class="lineNum">     239</span>              : #-----------------------------------------------------------------------------# cancel</span>
+<span id="L240"><span class="lineNum">     240</span>              : &quot;&quot;&quot;</span>
+<span id="L241"><span class="lineNum">     241</span>              :     cancel(job_id::String) --&gt; obj::JSON3.Object</span>
+<span id="L242"><span class="lineNum">     242</span>              : Cancels a submitted job.  Returns a JSON3.Object with job details.</span>
+<span id="L243"><span class="lineNum">     243</span>              : &quot;&quot;&quot;</span>
+<span id="L244"><span class="lineNum">     244</span> <span class="tlaUNC">           0 : function cancel(job_id::String)</span></span>
+<span id="L245"><span class="lineNum">     245</span> <span class="tlaUNC">           0 :     url = BASE_URL * &quot;/job/cancel&quot;</span></span>
+<span id="L246"><span class="lineNum">     246</span> <span class="tlaUNC">           0 :     res = HTTP.get(url, HEADER; query=Dict(&quot;JobId&quot; =&gt; job_id))</span></span>
+<span id="L247"><span class="lineNum">     247</span> <span class="tlaUNC">           0 :     JSON3.read(res.body)</span></span>
+<span id="L248"><span class="lineNum">     248</span>              : end</span>
+<span id="L249"><span class="lineNum">     249</span>              : </span>
+<span id="L250"><span class="lineNum">     250</span>              : #-----------------------------------------------------------------------------# status</span>
+<span id="L251"><span class="lineNum">     251</span>              : &quot;&quot;&quot;</span>
+<span id="L252"><span class="lineNum">     252</span>              :     status(job_id::String) --&gt; obj::JSON3.Object</span>
+<span id="L253"><span class="lineNum">     253</span>              : </span>
+<span id="L254"><span class="lineNum">     254</span>              : Queries the status of a submitted job.  Returns a JSON3.Object with job details.</span>
+<span id="L255"><span class="lineNum">     255</span>              : If `obj.status == &quot;Succeeded&quot;`, the output zipfile can be downloaded from URL `obj.outputFile`.</span>
+<span id="L256"><span class="lineNum">     256</span>              : &quot;&quot;&quot;</span>
+<span id="L257"><span class="lineNum">     257</span> <span class="tlaUNC">           0 : function status(job_id::String)</span></span>
+<span id="L258"><span class="lineNum">     258</span> <span class="tlaUNC">           0 :     url = BASE_URL * &quot;/job/status&quot;</span></span>
+<span id="L259"><span class="lineNum">     259</span> <span class="tlaUNC">           0 :     res = HTTP.get(url, HEADER; query=Dict(&quot;JobId&quot; =&gt; job_id))</span></span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaUNC">           0 :     JSON3.read(res.body)</span></span>
+<span id="L261"><span class="lineNum">     261</span>              : end</span>
+<span id="L262"><span class="lineNum">     262</span>              : </span>
+<span id="L263"><span class="lineNum">     263</span>              : #-----------------------------------------------------------------------------# download</span>
+<span id="L264"><span class="lineNum">     264</span>              : &quot;&quot;&quot;</span>
+<span id="L265"><span class="lineNum">     265</span>              :     download(job::Job; every=5, timeout=3600, file)</span>
+<span id="L266"><span class="lineNum">     266</span>              : </span>
+<span id="L267"><span class="lineNum">     267</span>              : Submits a job to the LANDFIRE API, polls the job status every `every` seconds, and downloads the result.</span>
+<span id="L268"><span class="lineNum">     268</span>              : When the job completes successfully, downloads and returns the path to the output zipfile.  The `timeout` parameter</span>
+<span id="L269"><span class="lineNum">     269</span>              : specifies the maximum time (in seconds) to wait for the job to complete (default: 3600 = 1 hour).</span>
+<span id="L270"><span class="lineNum">     270</span>              : &quot;&quot;&quot;</span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaUNC">           0 : function download(job::Job; file=joinpath(dir(), &quot;job_$(hash(job)).zip&quot;), every::Integer=5, timeout::Integer=3600)</span></span>
+<span id="L272"><span class="lineNum">     272</span> <span class="tlaUNC">           0 :     id = submit(job)</span></span>
+<span id="L273"><span class="lineNum">     273</span> <span class="tlaUNC">           0 :     @info &quot;Submitted job with ID: $id.  Checking job every $every seconds.&quot;</span></span>
+<span id="L274"><span class="lineNum">     274</span> <span class="tlaUNC">           0 :     start_time = time()</span></span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaUNC">           0 :     while true</span></span>
+<span id="L276"><span class="lineNum">     276</span> <span class="tlaUNC">           0 :         for i in 1:every</span></span>
+<span id="L277"><span class="lineNum">     277</span> <span class="tlaUNC">           0 :             sleep(1)</span></span>
+<span id="L278"><span class="lineNum">     278</span> <span class="tlaUNC">           0 :             print('.')</span></span>
+<span id="L279"><span class="lineNum">     279</span> <span class="tlaUNC">           0 :         end</span></span>
+<span id="L280"><span class="lineNum">     280</span> <span class="tlaUNC">           0 :         if time() - start_time &gt; timeout</span></span>
+<span id="L281"><span class="lineNum">     281</span> <span class="tlaUNC">           0 :             error(&quot;Job timed out after $timeout seconds. Job ID: $id&quot;)</span></span>
+<span id="L282"><span class="lineNum">     282</span>              :         end</span>
+<span id="L283"><span class="lineNum">     283</span> <span class="tlaUNC">           0 :         obj = status(id)</span></span>
+<span id="L284"><span class="lineNum">     284</span> <span class="tlaUNC">           0 :         @info &quot;Job Status: $(obj.status)&quot;</span></span>
+<span id="L285"><span class="lineNum">     285</span> <span class="tlaUNC">           0 :         if obj.status == &quot;Succeeded&quot;</span></span>
+<span id="L286"><span class="lineNum">     286</span> <span class="tlaUNC">           0 :             file = Downloads.download(obj.outputFile, file)</span></span>
+<span id="L287"><span class="lineNum">     287</span> <span class="tlaUNC">           0 :             return file</span></span>
+<span id="L288"><span class="lineNum">     288</span> <span class="tlaUNC">           0 :         elseif obj.status == &quot;Failed&quot;</span></span>
+<span id="L289"><span class="lineNum">     289</span> <span class="tlaUNC">           0 :             error(&quot;Job failed: $(obj)&quot;)</span></span>
+<span id="L290"><span class="lineNum">     290</span>              :         end</span>
+<span id="L291"><span class="lineNum">     291</span> <span class="tlaUNC">           0 :     end</span></span>
+<span id="L292"><span class="lineNum">     292</span>              : end</span>
+<span id="L293"><span class="lineNum">     293</span>              : </span>
+<span id="L294"><span class="lineNum">     294</span>              : </span>
+<span id="L295"><span class="lineNum">     295</span>              : </span>
+<span id="L296"><span class="lineNum">     296</span>              : &quot;&quot;&quot;</span>
+<span id="L297"><span class="lineNum">     297</span>              :     extract(file, dir=tempdir())</span>
+<span id="L298"><span class="lineNum">     298</span>              : </span>
+<span id="L299"><span class="lineNum">     299</span>              : Extract a 7zip archive to the specified directory using p7zip.  Returns the directory path.</span>
+<span id="L300"><span class="lineNum">     300</span>              : &quot;&quot;&quot;</span>
+<span id="L301"><span class="lineNum">     301</span>              : function extract(file::AbstractString, dir::AbstractString = tempdir())</span>
+<span id="L302"><span class="lineNum">     302</span> <span class="tlaUNC">           0 :     run(`$(p7zip()) x $file -o$dir -y`)</span></span>
+<span id="L303"><span class="lineNum">     303</span> <span class="tlaUNC">           0 :     return dir</span></span>
+<span id="L304"><span class="lineNum">     304</span>              : end</span>
+<span id="L305"><span class="lineNum">     305</span>              : </span>
+<span id="L306"><span class="lineNum">     306</span>              : #-----------------------------------------------------------------------------# Dataset</span>
+<span id="L307"><span class="lineNum">     307</span>              : &quot;&quot;&quot;</span>
+<span id="L308"><span class="lineNum">     308</span>              :     Dataset(products::Vector{Product}, aoi; dir=mktempdir(), kw...)</span>
+<span id="L309"><span class="lineNum">     309</span>              : </span>
+<span id="L310"><span class="lineNum">     310</span>              : A convenience struct that encapsulates a complete LANDFIRE dataset download and extraction.</span>
+<span id="L311"><span class="lineNum">     311</span>              : </span>
+<span id="L312"><span class="lineNum">     312</span>              : - `products`: Vector of `Product` structs to download</span>
+<span id="L313"><span class="lineNum">     313</span>              : - `aoi`: Area of interest (see `Job` constructor for accepted formats)</span>
+<span id="L314"><span class="lineNum">     314</span>              : - `kw...`: Additional keyword arguments passed to the `Job` constructor.</span>
+<span id="L315"><span class="lineNum">     315</span>              : </span>
+<span id="L316"><span class="lineNum">     316</span>              : Files are cached in scratchspace based on the job hash, so repeated calls with the same parameters</span>
+<span id="L317"><span class="lineNum">     317</span>              : will return the cached result without re-downloading.</span>
+<span id="L318"><span class="lineNum">     318</span>              : &quot;&quot;&quot;</span>
+<span id="L319"><span class="lineNum">     319</span>              : struct Dataset</span>
+<span id="L320"><span class="lineNum">     320</span>              :     products::Vector{Product}</span>
+<span id="L321"><span class="lineNum">     321</span>              :     job::Job</span>
+<span id="L322"><span class="lineNum">     322</span>              :     file::String  # path to downloaded zipfile</span>
+<span id="L323"><span class="lineNum">     323</span>              :     dir::String  # path to extracted directory</span>
+<span id="L324"><span class="lineNum">     324</span>              : </span>
+<span id="L325"><span class="lineNum">     325</span> <span class="tlaGNC tlaBgGNC">           4 :     function Dataset(products::Vector{Product}, aoi; kw...)</span></span>
+<span id="L326"><span class="lineNum">     326</span> <span class="tlaGNC">           2 :         job = Job(products, aoi; kw...)</span></span>
+<span id="L327"><span class="lineNum">     327</span> <span class="tlaGNC">           2 :         h = hash(job)</span></span>
+<span id="L328"><span class="lineNum">     328</span> <span class="tlaGNC">           2 :         new(products, job, joinpath(dir(), &quot;job_$h.zip&quot;), joinpath(dir(), &quot;job_$h&quot;))</span></span>
+<span id="L329"><span class="lineNum">     329</span>              :     end</span>
+<span id="L330"><span class="lineNum">     330</span>              : end</span>
+<span id="L331"><span class="lineNum">     331</span>              : </span>
+<span id="L332"><span class="lineNum">     332</span> <span class="tlaGNC">           4 : function Base.get(data::Dataset; every=5, timeout=3600)</span></span>
+<span id="L333"><span class="lineNum">     333</span> <span class="tlaGNC">           2 :     if !isdir(data.dir)</span></span>
+<span id="L334"><span class="lineNum">     334</span> <span class="tlaUNC tlaBgUNC">           0 :         @info &quot;Downloading dataset to $(data.file)&quot;</span></span>
+<span id="L335"><span class="lineNum">     335</span> <span class="tlaUNC">           0 :         download(data.job; file=data.file, every=every, timeout=timeout)</span></span>
+<span id="L336"><span class="lineNum">     336</span> <span class="tlaUNC">           0 :         @info &quot;Extracting dataset to $(data.dir)&quot;</span></span>
+<span id="L337"><span class="lineNum">     337</span> <span class="tlaUNC">           0 :         extract(data.file, data.dir)</span></span>
+<span id="L338"><span class="lineNum">     338</span>              :     else</span>
+<span id="L339"><span class="lineNum">     339</span> <span class="tlaGNC tlaBgGNC">           2 :         @info &quot;Using cached directory: $(data.dir)&quot;</span></span>
+<span id="L340"><span class="lineNum">     340</span>              :     end</span>
+<span id="L341"><span class="lineNum">     341</span> <span class="tlaGNC">           2 :     return only(filter(endswith(&quot;.tif&quot;), readdir(data.dir; join=true)))</span></span>
+<span id="L342"><span class="lineNum">     342</span>              : end</span>
+<span id="L343"><span class="lineNum">     343</span>              : </span>
+<span id="L344"><span class="lineNum">     344</span> <span class="tlaGNC">           1 : function Base.show(io::IO, data::Dataset)</span></span>
+<span id="L345"><span class="lineNum">     345</span> <span class="tlaGNC">           1 :     println(io, styled&quot;{bright_cyan:Landfire.Dataset}&quot;)</span></span>
+<span id="L346"><span class="lineNum">     346</span> <span class="tlaGNC">           1 :     println(io, &quot; Area of Interest: &quot;, data.job.area_of_interest)</span></span>
+<span id="L347"><span class="lineNum">     347</span> <span class="tlaGNC">           1 :     for p in data.products</span></span>
+<span id="L348"><span class="lineNum">     348</span> <span class="tlaGNC">           1 :         println(io, &quot; - &quot;, p)</span></span>
+<span id="L349"><span class="lineNum">     349</span> <span class="tlaGNC">           1 :     end</span></span>
+<span id="L350"><span class="lineNum">     350</span>              : end</span>
+<span id="L351"><span class="lineNum">     351</span>              : </span>
+<span id="L352"><span class="lineNum">     352</span>              : &quot;&quot;&quot;</span>
+<span id="L353"><span class="lineNum">     353</span>              :     files(data::Dataset)</span>
+<span id="L354"><span class="lineNum">     354</span>              : </span>
+<span id="L355"><span class="lineNum">     355</span>              : Return a vector of absolute file paths for all files in the extracted dataset directory.</span>
+<span id="L356"><span class="lineNum">     356</span>              : &quot;&quot;&quot;</span>
+<span id="L357"><span class="lineNum">     357</span> <span class="tlaUNC tlaBgUNC">           0 : files(data::Dataset) = readdir(data.dir; join=true)</span></span>
+<span id="L358"><span class="lineNum">     358</span>              : </span>
+<span id="L359"><span class="lineNum">     359</span>              : #-----------------------------------------------------------------------------# Full Product Downloads</span>
+<span id="L360"><span class="lineNum">     360</span>              : const REGIONS = [&quot;CONUS&quot;, &quot;AK&quot;, &quot;HI&quot;]</span>
+<span id="L361"><span class="lineNum">     361</span>              : </span>
+<span id="L362"><span class="lineNum">     362</span>              : &quot;&quot;&quot;</span>
+<span id="L363"><span class="lineNum">     363</span>              :     full_product_url(layer::String, region::String=&quot;CONUS&quot;, year::Int=2024)</span>
+<span id="L364"><span class="lineNum">     364</span>              :     full_product_url(product::Product, region::String=&quot;CONUS&quot;)</span>
+<span id="L365"><span class="lineNum">     365</span>              : </span>
+<span id="L366"><span class="lineNum">     366</span>              : Return the URL for downloading a full extent LANDFIRE product.</span>
+<span id="L367"><span class="lineNum">     367</span>              : </span>
+<span id="L368"><span class="lineNum">     368</span>              : - `layer`: Layer name (e.g., &quot;FBFM13&quot;, &quot;EVT&quot;)</span>
+<span id="L369"><span class="lineNum">     369</span>              : - `region`: Geographic region (&quot;CONUS&quot;, &quot;AK&quot;, or &quot;HI&quot;)</span>
+<span id="L370"><span class="lineNum">     370</span>              : - `year`: Product year (default: 2024)</span>
+<span id="L371"><span class="lineNum">     371</span>              : </span>
+<span id="L372"><span class="lineNum">     372</span>              : ## Example</span>
+<span id="L373"><span class="lineNum">     373</span>              : ```julia</span>
+<span id="L374"><span class="lineNum">     374</span>              : url = Landfire.full_product_url(&quot;FBFM13&quot;, &quot;CONUS&quot;, 2024)</span>
+<span id="L375"><span class="lineNum">     375</span>              : # &quot;https://landfire.gov/data-downloads/CONUS_LF2024/LF2024_FBFM13_CONUS.zip&quot;</span>
+<span id="L376"><span class="lineNum">     376</span>              : </span>
+<span id="L377"><span class="lineNum">     377</span>              : # Or from a Product (extracts layer name and year from product)</span>
+<span id="L378"><span class="lineNum">     378</span>              : prod = Landfire.products(layer=&quot;FBFM13&quot;)[1]</span>
+<span id="L379"><span class="lineNum">     379</span>              : url = Landfire.full_product_url(prod, &quot;CONUS&quot;)</span>
+<span id="L380"><span class="lineNum">     380</span>              : ```</span>
+<span id="L381"><span class="lineNum">     381</span>              : &quot;&quot;&quot;</span>
+<span id="L382"><span class="lineNum">     382</span> <span class="tlaUNC">           0 : function full_product_url(layer::String, region::String=&quot;CONUS&quot;, year::Int=2024)</span></span>
+<span id="L383"><span class="lineNum">     383</span> <span class="tlaUNC">           0 :     region = uppercase(region)</span></span>
+<span id="L384"><span class="lineNum">     384</span> <span class="tlaUNC">           0 :     region in REGIONS || error(&quot;Unknown region: $region. Available: $(join(REGIONS, &quot;, &quot;))&quot;)</span></span>
+<span id="L385"><span class="lineNum">     385</span> <span class="tlaUNC">           0 :     folder = &quot;$(region)_LF$year&quot;</span></span>
+<span id="L386"><span class="lineNum">     386</span> <span class="tlaUNC">           0 :     filename = &quot;LF$(year)_$(layer)_$(region).zip&quot;</span></span>
+<span id="L387"><span class="lineNum">     387</span> <span class="tlaUNC">           0 :     return &quot;$DOWNLOAD_BASE_URL/$folder/$filename&quot;</span></span>
+<span id="L388"><span class="lineNum">     388</span>              : end</span>
+<span id="L389"><span class="lineNum">     389</span>              : </span>
+<span id="L390"><span class="lineNum">     390</span> <span class="tlaUNC">           0 : function full_product_url(product::Product, region::String=&quot;CONUS&quot;)</span></span>
+<span id="L391"><span class="lineNum">     391</span>              :     # Extract base layer name by removing leading resolution digits (e.g., &quot;250FBFM13&quot; -&gt; &quot;FBFM13&quot;)</span>
+<span id="L392"><span class="lineNum">     392</span> <span class="tlaUNC">           0 :     layer = replace(product.layer, r&quot;^\d+&quot; =&gt; &quot;&quot;)</span></span>
+<span id="L393"><span class="lineNum">     393</span>              :     # Extract year from product name (e.g., &quot;Fire Behavior Fuel Model 13 Anderson&quot; with version &quot;LF 2024&quot;)</span>
+<span id="L394"><span class="lineNum">     394</span>              :     # or from version string which contains the year</span>
+<span id="L395"><span class="lineNum">     395</span> <span class="tlaUNC">           0 :     year_match = match(r&quot;(\d{4})&quot;, product.version)</span></span>
+<span id="L396"><span class="lineNum">     396</span> <span class="tlaUNC">           0 :     year = isnothing(year_match) ? 2024 : parse(Int, year_match.captures[1])</span></span>
+<span id="L397"><span class="lineNum">     397</span> <span class="tlaUNC">           0 :     full_product_url(layer, region, year)</span></span>
+<span id="L398"><span class="lineNum">     398</span>              : end</span>
+<span id="L399"><span class="lineNum">     399</span>              : </span>
+<span id="L400"><span class="lineNum">     400</span>              : &quot;&quot;&quot;</span>
+<span id="L401"><span class="lineNum">     401</span>              :     filesize(url::String) -&gt; Int</span>
+<span id="L402"><span class="lineNum">     402</span>              : </span>
+<span id="L403"><span class="lineNum">     403</span>              : Query the size of a remote file in bytes using an HTTP HEAD request.</span>
+<span id="L404"><span class="lineNum">     404</span>              : </span>
+<span id="L405"><span class="lineNum">     405</span>              : Returns the file size, or throws an error if the size cannot be determined.</span>
+<span id="L406"><span class="lineNum">     406</span>              : </span>
+<span id="L407"><span class="lineNum">     407</span>              : ## Example</span>
+<span id="L408"><span class="lineNum">     408</span>              : ```julia</span>
+<span id="L409"><span class="lineNum">     409</span>              : url = Landfire.full_product_url(&quot;FBFM13&quot;)</span>
+<span id="L410"><span class="lineNum">     410</span>              : size = Landfire.filesize(url)</span>
+<span id="L411"><span class="lineNum">     411</span>              : @info Base.format_bytes(size)</span>
+<span id="L412"><span class="lineNum">     412</span>              : ```</span>
+<span id="L413"><span class="lineNum">     413</span>              : &quot;&quot;&quot;</span>
+<span id="L414"><span class="lineNum">     414</span> <span class="tlaUNC">           0 : function filesize(url::String)</span></span>
+<span id="L415"><span class="lineNum">     415</span> <span class="tlaUNC">           0 :     response = HTTP.head(url)</span></span>
+<span id="L416"><span class="lineNum">     416</span> <span class="tlaUNC">           0 :     content_length = HTTP.header(response, &quot;Content-Length&quot;)</span></span>
+<span id="L417"><span class="lineNum">     417</span> <span class="tlaUNC">           0 :     isempty(content_length) &amp;&amp; error(&quot;Server did not return Content-Length header&quot;)</span></span>
+<span id="L418"><span class="lineNum">     418</span> <span class="tlaUNC">           0 :     return parse(Int, content_length)</span></span>
+<span id="L419"><span class="lineNum">     419</span>              : end</span>
+<span id="L420"><span class="lineNum">     420</span>              : </span>
+<span id="L421"><span class="lineNum">     421</span>              : </span>
+<span id="L422"><span class="lineNum">     422</span>              : end # module</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>
