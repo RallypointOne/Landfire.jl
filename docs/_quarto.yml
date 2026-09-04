@@ -2,37 +2,54 @@ project:
   type: book
   output-dir: _site
 
-engine: julia
+engines: ['julia']
 julia:
   project: "."
 
 book:
   title: "Landfire.jl"
+  search:
+    location: sidebar
+    keyboard-shortcut:
+      - "/"
   navbar:
+    logo: assets/logo.svg
+    logo-href: https://rallypoint1.com
     right:
       - icon: star
         href: https://github.com/RallypointOne/Landfire.jl/stargazers
         text: "Star"
+        target: _blank
       - icon: github
         href: https://github.com/RallypointOne/Landfire.jl
+        target: _blank
   chapters:
     - part: "Docs"
       chapters:
         - index.qmd
-        - getting-started.qmd
-        - examples.qmd
-        - api.qmd
-    - part: "Reference"
+        - pages/getting-started.qmd
+        - pages/examples.qmd
+    - part: "API"
       chapters:
-        - changelog.qmd
-        - coverage.qmd
+        - pages/api.qmd
+    - part: "Resources"
+      chapters:
+        - pages/changelog.qmd
+        - pages/coverage.qmd
+
+  page-footer:
+    center: "Built on __BUILD_DATE__"
+
+language:
+  search-text-placeholder: "Search  (/)"
 
 format:
   html:
-    css: styles.css
+    css: assets/styles.css
     number-sections: false
+    link-external-newwindow: true
     theme:
-      light: flatly
-      dark: darkly
+      - flatly
+      - assets/theme.scss
     include-after-body:
-      - file: _version-selector.html
+      - file: assets/_version-selector.html

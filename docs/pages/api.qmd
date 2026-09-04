@@ -13,7 +13,7 @@ using Landfire
 ```{julia}
 #| echo: false
 #| output: asis
-export_names = filter(!=(:Landfire), names(Landfire))
+export_names = filter(n -> n != :Landfire && Base.ispublic(Landfire, n), names(Landfire; all=true))
 
 classify(name, b) = startswith(string(name), "@") ? :macro :
     b isa Type ? :type : b isa Function ? :function : :constant
@@ -22,7 +22,7 @@ classify(name, b) = startswith(string(name), "@") ? :macro :
 anchor(name) = lowercase(replace(string(name), "@" => "macro-"))
 
 if isempty(export_names)
-    println("This package does not export any names yet.\n")
+    println("This package does not declare any public names yet.\n")
 else
     println("""
     <div class="api-controls">
