@@ -1,1 +1,0 @@
-genhtml -t 'on branch main' -o /home/runner/work/Landfire.jl/Landfire.jl/docs/_site/coverage coverage/lcov.info

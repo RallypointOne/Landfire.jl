@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -61,42 +64,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./changelog.html" rel="next">
-<link href="./examples.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fce8df779a481fbb41f71622726cbeda.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b44ccea540e06768bee7c3f9d372997f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-fce8df779a481fbb41f71622726cbeda.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../pages/changelog.html" rel="next">
+<link href="../pages/examples.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-73b0ff3878a4e6fc3716dc69a6aaefa3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-7f48b52cfed0612b99a5f135dc6cfa1a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
+    "/"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -105,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
+    "search-text-placeholder": "Search  (/)",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -113,202 +109,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../assets/styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a href="https://rallypoint1.com" class="navbar-brand navbar-brand-logo">
+    <img src="../assets/logo.svg" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.svg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="https://rallypoint1.com">
     <span class="navbar-title">Landfire.jl</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/RallypointOne/Landfire.jl/stargazers"> <i class="bi bi-star" role="img">
+    <a class="nav-link" href="https://github.com/RallypointOne/Landfire.jl/stargazers" target="_blank"> <i class="bi bi-star" role="img">
 </i> 
 <span class="menu-text">Star</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/RallypointOne/Landfire.jl"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/RallypointOne/Landfire.jl" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -317,9 +153,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Docs</a></li><li class="breadcrumb-item"><a href="./api.html"><span class="chapter-title">API</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/api.html">API</a></li><li class="breadcrumb-item"><a href="../pages/api.html"><span class="chapter-title">API</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
   </nav>
 </header>
@@ -327,6 +166,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
@@ -340,23 +184,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Landfire.jl</span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Landfire.jl</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
+  <a href="../pages/getting-started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Examples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./api.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">API</span></a>
+  <a href="../pages/examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Examples</span></a>
   </div>
 </li>
       </ul>
@@ -364,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">API</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -372,12 +211,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./changelog.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Changelog</span></a>
+  <a href="../pages/api.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">API</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pages/changelog.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Changelog</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coverage.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Coverage</span></a>
+  <a href="../pages/coverage.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Coverage</span></a>
   </div>
 </li>
       </ul>
@@ -387,14 +242,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#types" id="toc-types" class="nav-link active" data-scroll-target="#types">Types</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Docs</a></li><li class="breadcrumb-item"><a href="./api.html"><span class="chapter-title">API</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/api.html">API</a></li><li class="breadcrumb-item"><a href="../pages/api.html"><span class="chapter-title">API</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">API</span></h1>
 </div>
@@ -413,48 +274,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<button class="btn btn-sm btn-outline-secondary mb-3" id="toggle-all-callouts">
-Expand All
+<div class="api-controls">
+<button type="button" class="btn btn-sm btn-outline-secondary" data-api-toggle="open">
+Open all
 </button>
-<script>
-document.getElementById('toggle-all-callouts').addEventListener('click', function() {
-  var btn = this;
-  var bodies = document.querySelectorAll('.callout-collapse.collapse');
-  var allOpen = Array.from(bodies).every(function(el) { return el.classList.contains('show'); });
-  bodies.forEach(function(el) {
-    var bsCollapse = bootstrap.Collapse.getOrCreateInstance(el, {toggle: false});
-    allOpen ? bsCollapse.hide() : bsCollapse.show();
-  });
-  btn.textContent = allOpen ? 'Expand All' : 'Collapse All';
-});
-</script>
-<ul>
-<li><a href="#dataset"><code>Dataset</code></a> <em>(type)</em></li>
-<li><a href="#job"><code>Job</code></a> <em>(type)</em></li>
-<li><a href="#attribute_table"><code>attribute_table</code></a> <em>(function)</em></li>
-<li><a href="#attribute_table_url"><code>attribute_table_url</code></a> <em>(function)</em></li>
-<li><a href="#cancel"><code>cancel</code></a> <em>(function)</em></li>
-<li><a href="#extract"><code>extract</code></a> <em>(function)</em></li>
-<li><a href="#files"><code>files</code></a> <em>(function)</em></li>
-<li><a href="#filesize"><code>filesize</code></a> <em>(function)</em></li>
-<li><a href="#full_product_url"><code>full_product_url</code></a> <em>(function)</em></li>
-<li><a href="#healthcheck"><code>healthcheck</code></a> <em>(function)</em></li>
-<li><a href="#products"><code>products</code></a> <em>(function)</em></li>
-<li><a href="#status"><code>status</code></a> <em>(function)</em></li>
-<li><a href="#submit"><code>submit</code></a> <em>(function)</em></li>
-</ul>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<button type="button" class="btn btn-sm btn-outline-secondary" data-api-toggle="close">
+Close all
+</button>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>Dataset</code> <span class="text-muted"><em>(type)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<section id="types" class="level2">
+<h2 class="anchored" data-anchor-id="types">Types</h2>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="dataset" class="anchored">
+<code>Dataset</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dataset</span>(products<span class="op">::</span><span class="dt">Vector{Product}</span>, aoi; dir<span class="op">=</span><span class="fu">mktempdir</span>(), kw<span class="op">...</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A convenience struct that encapsulates a complete LANDFIRE dataset download and extraction.</p>
 <ul>
@@ -464,20 +300,14 @@ document.getElementById('toggle-all-callouts').addEventListener('click', functio
 </ul>
 <p>Files are cached in scratchspace based on the job hash, so repeated calls with the same parameters will return the cached result without re-downloading.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>Job</code> <span class="text-muted"><em>(type)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="job" class="anchored">
+<code>Job</code>
+</h4>
+</summary>
+<div class="card-body">
 <p>No documentation found for public binding <code>Landfire.Job</code>.</p>
 <section id="summary" class="level1">
 <h1>Summary</h1>
@@ -495,109 +325,76 @@ edit_mask           :: Union{Nothing, String}
 priority_code       :: Union{Nothing, String}</code></pre>
 </section>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>attribute_table</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+</section>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="attribute_table" class="anchored">
+<code>attribute_table</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attribute_table</span>(product<span class="op">::</span><span class="dt">Product</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attribute_table</span>(layer<span class="op">::</span><span class="dt">String</span>, year<span class="op">::</span><span class="dt">Int</span>=<span class="fl">2024</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Download and parse the LANDFIRE attribute table CSV for the given product or layer.</p>
 <p>Returns a vector of <code>NamedTuple</code>s with column names from the CSV header.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>attribute_table_url</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="attribute_table_url" class="anchored">
+<code>attribute_table_url</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attribute_table_url</span>(layer<span class="op">::</span><span class="dt">String</span>, year<span class="op">::</span><span class="dt">Int</span>=<span class="fl">2024</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attribute_table_url</span>(product<span class="op">::</span><span class="dt">Product</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Return the URL for the LANDFIRE attribute table CSV for the given layer and year.</p>
 <p>Available layers: FBFM13, FBFM40, EVT, EVC, FVT, FVC, FRG, SCLASS, FDIST, HDIST, BPS</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>cancel</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="cancel" class="anchored">
+<code>cancel</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cancel</span>(job_id<span class="op">::</span><span class="dt">String</span>) <span class="op">--&gt;</span> obj<span class="op">::</span><span class="dt">JSON3.Object</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Cancels a submitted job. Returns a JSON3.Object with job details.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>extract</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="extract" class="anchored">
+<code>extract</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract</span>(file, dir<span class="op">=</span><span class="fu">tempdir</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Extract a 7zip archive to the specified directory using p7zip. Returns the directory path.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>files</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="files" class="anchored">
+<code>files</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">files</span>(data<span class="op">::</span><span class="dt">Dataset</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Return a vector of absolute file paths for all files in the extracted dataset directory.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>filesize</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="filesize" class="anchored">
+<code>filesize</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filesize</span>(url<span class="op">::</span><span class="dt">String</span>) <span class="op">-&gt;</span> <span class="dt">Int</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Query the size of a remote file in bytes using an HTTP HEAD request.</p>
 <p>Returns the file size, or throws an error if the size cannot be determined.</p>
@@ -608,20 +405,14 @@ priority_code       :: Union{Nothing, String}</code></pre>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@info</span> <span class="bu">Base</span>.<span class="fu">format_bytes</span>(size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>full_product_url</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="full_product_url" class="anchored">
+<code>full_product_url</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_product_url</span>(layer<span class="op">::</span><span class="dt">String</span>, region<span class="op">::</span><span class="dt">String</span>=<span class="st">"CONUS"</span>, year<span class="op">::</span><span class="dt">Int</span>=<span class="fl">2024</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">full_product_url</span>(product<span class="op">::</span><span class="dt">Product</span>, region<span class="op">::</span><span class="dt">String</span>=<span class="st">"CONUS"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Return the URL for downloading a full extent LANDFIRE product.</p>
@@ -640,40 +431,28 @@ priority_code       :: Union{Nothing, String}</code></pre>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> Landfire.<span class="fu">full_product_url</span>(prod, <span class="st">"CONUS"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>healthcheck</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="healthcheck" class="anchored">
+<code>healthcheck</code>
+</h4>
+</summary>
+<div class="card-body">
 <p>No documentation found for public binding <code>Landfire.healthcheck</code>.</p>
 <p><code>Landfire.healthcheck</code> is a <code>Function</code>.</p>
 <pre><code># 1 method for generic function "healthcheck" from Landfire:
  [1] healthcheck()
      @ ~/work/Landfire.jl/Landfire.jl/src/Landfire.jl:33</code></pre>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>products</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="products" class="anchored">
+<code>products</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">products</span>(latest<span class="op">=</span><span class="cn">true</span>; refresh<span class="op">=</span><span class="cn">false</span>, kw<span class="op">...</span>) <span class="op">-&gt;</span> <span class="dt">Vector</span>{Product}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fetch and filter available products from the LANDFIRE API.</p>
 <p>Returns a vector of <code>Product</code> structs sorted by name. Results are cached locally; use <code>refresh=true</code> to update the cache from the API.</p>
@@ -703,61 +482,59 @@ priority_code       :: Union{Nothing, String}</code></pre>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">products</span>(refresh<span class="op">=</span><span class="cn">true</span>)            <span class="co"># Refresh cache and return all latest products</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>status</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="status" class="anchored">
+<code>status</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">status</span>(job_id<span class="op">::</span><span class="dt">String</span>) <span class="op">--&gt;</span> obj<span class="op">::</span><span class="dt">JSON3.Object</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Queries the status of a submitted job. Returns a JSON3.Object with job details. If <code>obj.status == "Succeeded"</code>, the output zipfile can be downloaded from URL <code>obj.outputFile</code>.</p>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span><code>submit</code> <span class="text-muted"><em>(function)</em></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+</details>
+<details class="card mb-3 api-card">
+<summary class="card-header api-item-header">
+<h4 id="submit" class="anchored">
+<code>submit</code>
+</h4>
+</summary>
+<div class="card-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">submit</span>(job<span class="op">::</span><span class="dt">Job</span>) <span class="op">--&gt;</span> job_id<span class="op">::</span><span class="dt">String</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Submits a job to the LANDFIRE API. Returns the job ID as a string.</p>
 </div>
-</div>
-</div>
+</details>
+<script>
+(function() {
+    document.querySelectorAll("[data-api-toggle]").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+            var open = btn.dataset.apiToggle === "open";
+            document.querySelectorAll("details.api-card").forEach(function(d) { d.open = open; });
+        });
+    });
+
+    // Browsers do not expand a closed <details> when navigating to an id inside it,
+    // so a deep link or search hit would otherwise land on a collapsed card.
+    function revealTarget() {
+        var id = decodeURIComponent(location.hash.slice(1));
+        var el = id && document.getElementById(id);
+        var card = el && el.closest("details.api-card");
+        // Expanding only adds content below the summary, so the browser's own
+        // scroll to the anchor stays correct.
+        if (card) card.open = true;
+    }
+    revealTarget();
+    window.addEventListener("hashchange", revealTarget);
+})();
+</script>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -843,6 +620,11 @@ priority_code       :: Union{Nothing, String}</code></pre>
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1158,17 +940,119 @@ priority_code       :: Union{Nothing, String}</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./examples.html" class="pagination-link" aria-label="Examples">
+      <a href="../pages/examples.html" class="pagination-link" aria-label="Examples">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Examples</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./changelog.html" class="pagination-link" aria-label="Changelog">
+      <a href="../pages/changelog.html" class="pagination-link" aria-label="Changelog">
         <span class="nav-page-text"><span class="chapter-title">Changelog</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Built on 2026-09-04</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>
+(function() {
+    // Injected per-version by .github/workflows/Docs.yml at deploy time.
+    // Local preview: placeholders aren't substituted; fall back to sensible defaults.
+    var CURRENT_VERSION = "dev";
+    var BASE_PATH = "/Landfire.jl/";
+    if (CURRENT_VERSION.indexOf("__") === 0) {
+        CURRENT_VERSION = "dev";
+        BASE_PATH = "/";
+    }
+
+    function buildDropdown(versions) {
+        var navbar = document.querySelector('.navbar-nav.navbar-nav-scroll.ms-auto');
+        if (!navbar) return;
+
+        var li = document.createElement('li');
+        li.className = 'nav-item dropdown';
+        li.innerHTML =
+            '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' +
+                CURRENT_VERSION +
+            '</a>' +
+            '<ul class="dropdown-menu dropdown-menu-end"></ul>';
+
+        var menu = li.querySelector('.dropdown-menu');
+
+        ['stable', 'dev'].forEach(function(v) {
+            var a = document.createElement('a');
+            a.className = 'dropdown-item' + (v === CURRENT_VERSION ? ' active' : '');
+            a.href = BASE_PATH + v + '/';
+            a.textContent = v;
+            var item = document.createElement('li');
+            item.appendChild(a);
+            menu.appendChild(item);
+        });
+
+        if (versions && versions.length > 0) {
+            var divider = document.createElement('li');
+            divider.innerHTML = '<hr class="dropdown-divider">';
+            menu.appendChild(divider);
+
+            versions.forEach(function(v) {
+                var a = document.createElement('a');
+                a.className = 'dropdown-item' + (v === CURRENT_VERSION ? ' active' : '');
+                a.href = BASE_PATH + v + '/';
+                a.textContent = v;
+                var item = document.createElement('li');
+                item.appendChild(a);
+                menu.appendChild(item);
+            });
+        }
+
+        navbar.prepend(li);
+
+        if (versions && versions.length > 0 && CURRENT_VERSION !== 'stable' && CURRENT_VERSION !== 'dev') {
+            var latest = versions[0];
+            if (CURRENT_VERSION !== latest) {
+                var banner = document.createElement('div');
+                banner.className = 'alert alert-warning text-center mb-0 rounded-0';
+                banner.setAttribute('role', 'alert');
+                banner.innerHTML = 'You are viewing docs for <strong>' + CURRENT_VERSION + '</strong>. ' +
+                    'The latest stable release is <a href="' + BASE_PATH + 'stable/" class="alert-link">' + latest + '</a>.';
+                document.body.prepend(banner);
+            }
+        }
+    }
+
+    fetch(BASE_PATH + 'versions.json')
+        .then(function(res) { return res.ok ? res.json() : []; })
+        .catch(function() { return []; })
+        .then(buildDropdown);
+
+    var titleLink = document.querySelector('a.navbar-brand:not(.navbar-brand-logo)');
+    if (titleLink) {
+        titleLink.href = BASE_PATH + CURRENT_VERSION + '/';
+    }
+
+    var starLink = document.querySelector('a.nav-link[href*="/stargazers"]');
+    if (starLink) {
+        var match = starLink.href.match(/github\.com\/([^/]+\/[^/]+)\/stargazers/);
+        if (match) {
+            var img = document.createElement('img');
+            img.src = 'https://img.shields.io/github/stars/' + match[1] + '?style=social';
+            img.alt = 'GitHub stars';
+            img.style.verticalAlign = 'middle';
+            starLink.replaceChildren(img);
+        }
+    }
+})();
+</script>
 
 
 

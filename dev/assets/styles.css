@@ -1,0 +1,86 @@
+/* Sidebar section spacing */
+.sidebar-item-section {
+    margin-top: 2rem !important;
+}
+
+.sidebar-item-section > .sidebar-item-container > .sidebar-item-text {
+    font-weight: bold;
+}
+
+.sidebar-item-section .collapse {
+    display: block !important;
+}
+
+.sidebar-item-toggle {
+    display: none !important;
+}
+
+
+
+/* Fix heading inline code */
+h1 code, h2 code, h3 code, h4 code {
+    background: none;
+    color: inherit;
+}
+
+/* Larger search results panel */
+.aa-Panel,
+#quarto-search-results .aa-Panel {
+    max-width: 600px;
+    font-size: 1rem;
+}
+
+/* Navbar bottom line and logo */
+.navbar {
+    border-bottom: 1px solid #D9DADC;
+}
+
+.navbar .nav-link:hover {
+    color: #C8202C !important;
+}
+
+.navbar .navbar-logo {
+    height: 2.5rem !important;
+    max-height: 2.5rem !important;
+    margin-right: 0.75rem;
+}
+
+/* API item cards */
+.api-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.api-card {
+    border-left: 3px solid var(--bs-primary);
+}
+
+.api-item-header {
+    background-color: #F7F7F8 !important;
+    border-bottom: 1px solid #D9DADC !important;
+    cursor: pointer;
+}
+
+/* Nothing below the header to divide from while the card is closed. */
+.api-card:not([open]) > .api-item-header {
+    border-bottom: none !important;
+}
+
+.api-item-header h4 {
+    display: inline;
+    margin: 0 !important;
+    color: #1A1A1B !important;
+    font-size: 1rem;
+}
+
+.api-item-header h4 code {
+    color: inherit !important;
+    background: none !important;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
